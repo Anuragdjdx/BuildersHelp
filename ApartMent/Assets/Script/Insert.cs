@@ -3,48 +3,66 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mono.Data.Sqlite;
 using System.Data;
-using Mono.Data.Sqlite;
-using System;
 using UnityEngine.UI;
 
 public class Insert : MonoBehaviour {
+    private const string V0 = "306";
+    private const string V = "TestName";
+    private const string V1 = "9987456321";
+    private const string V2 = "pasword";
+    public Button RegisterBtn;
+    private string conn, sqlQuery;
+    IDbConnection dbconn;
+    IDbCommand dbcmd;
+
+    public InputField Flatno_Ifield, FlatHolderName_Ifield, ContactNo_Ifield, Password_ifield;
+    Text Flatno_txt;
+    Text FlatHolderName_txt;
+    Text ContactNo_txt;
+    Text Password_txt;
 
     // Use this for initialization
     void Start()
     {
-
+        conn = "URI=file:" + Application.dataPath + "/Plugins/UsersDatabase.s3db"; //Path to database.
+     
         Button reg_btn = RegisterBtn.GetComponent<Button>();
         reg_btn.onClick.AddListener(OnRegisterButtonClick);
+
+        Flatno_txt = GetComponent<Text>();
+        FlatHolderName_txt = GetComponent<Text>();
+        ContactNo_txt  = GetComponent<Text>();
+        Password_txt = GetComponent<Text>();
 
     }
 
 
     void OnRegisterButtonClick()
     {
-        string conn = "URI=file:" + Application.dataPath + "/Plugins/UsersDatabase.s3db"; //Path to database.
-        IDbConnection dbconn;
-        dbconn = (IDbConnection)new SqliteConnection(conn);
-        dbconn.Open(); //Open connection to the database.
-        IDbCommand dbcmd = dbconn.CreateCommand();
-        string sqlQuery = "SELECT * " + "FROM UsersInfo";// table name
-        dbcmd.CommandText = sqlQuery;
-        IDataReader reader = dbcmd.ExecuteReader();
-        while (reader.Read())
-        {
-            int user_id = reader.GetInt32(0);
-            int FlatNo = reader.GetInt32(1);
-            string FlatHolderName = reader.GetString(2);
-            Int64 ContactNo = reader.GetInt64(3);
-            string Password = reader.GetString(4);
 
-            Debug.Log("UserId= " + user_id + "  FlatNo. =" + FlatNo + "  HolderName =" + FlatHolderName + "Phone" + ContactNo + " Password " + Password);
+
+     
+
+
+
+
+        insertvalue(int.Parse(V0), V, long.Parse(V1), V2);
+
+
+
+    }
+
+    private void insertvalue(int FlatNo, string FlatHolderName, long ContactNo, string Password)
+    {
+        using (dbconn = new SqliteConnection(conn))
+        {
+            dbconn.Open(); //Open connection to the database.
+            dbcmd = dbconn.CreateCommand();
+            sqlQuery = string.Format("insert into UsersInfo ( FlatNo, FlatHolderName,ContactNo,Password) values (\"{0}\",\"{1}\",\"{2}\",\"{3}\")", FlatNo, FlatHolderName, ContactNo, Password);// table name
+            dbcmd.CommandText = sqlQuery;
+            dbcmd.ExecuteScalar();
+            dbconn.Close();
         }
-        reader.Close();
-        reader = null;
-        dbcmd.Dispose();
-        dbcmd = null;
-        dbconn.Close();
-        dbconn = null;
     }
 
 
