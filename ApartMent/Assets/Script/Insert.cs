@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mono.Data.Sqlite;
 using System.Data;
+<<<<<<< HEAD
+=======
+using System;
+>>>>>>> 798ab37e8dc1beafab5fc1d9a5b9e03b60c4841b
 using UnityEngine.UI;
 
 public class Insert : MonoBehaviour {
@@ -21,6 +25,7 @@ public class Insert : MonoBehaviour {
     Text ContactNo_txt;
     Text Password_txt;
 
+    public Button RegisterBtn;
     // Use this for initialization
     void Start()
     {
