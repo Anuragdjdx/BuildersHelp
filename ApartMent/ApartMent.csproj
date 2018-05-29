@@ -245,6 +245,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Script\db.cs" />
+    <Compile Include="Assets\Script\sdb.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
