@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mono.Data.Sqlite;
 using System.Data;
-using Mono.Data.Sqlite;
 using System;
 using UnityEngine.UI;
 
 public class Insert : MonoBehaviour {
 
+    public Button RegisterBtn;
     // Use this for initialization
     void Start()
     {
